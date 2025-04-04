@@ -424,4 +424,161 @@
 
 .editable-row {
   background-color: #f0f7ff !important;
+}
+
+/* Genel İskonto Modal Stilleri */
+.discount-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discount-modal {
+  background-color: white;
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.discount-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.discount-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: #777;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+.discount-modal-body {
+  padding: 20px;
+}
+
+.current-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+.total-amount {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.new-total-input {
+  margin-bottom: 25px;
+}
+
+.new-total-input label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+.input-with-currency {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-prefix {
+  position: absolute;
+  right: 10px;
+  font-weight: 500;
+  color: #555;
+}
+
+.new-total-input input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.new-total-input input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52, 152, 219, 0.3);
+}
+
+.discount-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.apply-discount, .remove-discount {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.apply-discount {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.apply-discount:hover {
+  background-color: #27ae60;
+}
+
+.remove-discount {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.remove-discount:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Düzenlemeler */
+@media (max-width: 480px) {
+  .discount-modal {
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .discount-modal-actions {
+    flex-direction: column;
+  }
 } 

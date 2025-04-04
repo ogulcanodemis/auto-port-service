@@ -56,6 +56,10 @@ const PricingTab: React.FC = () => {
     discountRate: 0,
   });
   
+  // Genel İskonto Modal State
+  const [showDiscountModal, setShowDiscountModal] = useState(false);
+  const [newTotalPrice, setNewTotalPrice] = useState<string>('');
+  
   // KDV tutarını hesapla
   const calculateTax = (price: number, taxRate: number): number => {
     return price * (taxRate / 100);
@@ -205,6 +209,78 @@ const PricingTab: React.FC = () => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(amount);
+  };
+  
+  // Genel İskonto Uygulama
+  const applyGeneralDiscount = () => {
+    if (!newTotalPrice || parseFloat(newTotalPrice.replace(/\./g, '').replace(',', '.')) <= 0) {
+      return;
+    }
+    
+    const targetTotal = parseFloat(newTotalPrice.replace(/\./g, '').replace(',', '.'));
+    
+    if (targetTotal >= summary.grandTotal) {
+      alert('Yeni toplam fiyat, mevcut fiyattan büyük veya eşit olamaz!');
+      return;
+    }
+    
+    // Tam olarak kullanıcının istediği toplam fiyata ulaşabilmek için sabit bir hesaplama kullanıyoruz
+    
+    // İndirimsiz halde ürünlerin toplam fiyatı (KDV dahil)
+    let noDiscountTotal = 0;
+    const noDiscountProducts = products.map(product => {
+      const noDiscountPrice = calculateTotalPrice(product.unitPrice, product.quantity, product.taxRate, 0);
+      noDiscountTotal += noDiscountPrice;
+      return { ...product, noDiscountPrice };
+    });
+    
+    // İndirim oranı = (indirimsiz toplam - hedef toplam) / indirimsiz toplam * 100
+    const discountPercent = ((noDiscountTotal - targetTotal) / noDiscountTotal) * 100;
+    
+    // Her ürüne aynı indirim oranını uygula
+    const updatedProducts = noDiscountProducts.map(product => {
+      const totalPrice = product.noDiscountPrice * (1 - discountPercent / 100);
+      return {
+        ...product,
+        discountRate: discountPercent,
+        totalPrice
+      };
+    });
+    
+    setProducts(updatedProducts);
+    setShowDiscountModal(false);
+    setNewTotalPrice('');
+  };
+  
+  // İndirim Kaldırma
+  const removeDiscount = () => {
+    const updatedProducts = products.map(product => {
+      const totalPrice = calculateTotalPrice(
+        product.unitPrice,
+        product.quantity,
+        product.taxRate,
+        0 // İskontoyu sıfırla
+      );
+      
+      return {
+        ...product,
+        discountRate: 0,
+        totalPrice
+      };
+    });
+    
+    setProducts(updatedProducts);
+    setShowDiscountModal(false);
+    setNewTotalPrice('');
+  };
+  
+  // Decimal inputu kontrol et
+  const handlePriceInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Sadece sayılar, virgül ve nokta kabul et
+    if (/^[0-9.,]*$/.test(value)) {
+      setNewTotalPrice(value);
+    }
   };
   
   return (
@@ -519,7 +595,8 @@ const PricingTab: React.FC = () => {
         <div className="pricing-actions bottom-actions">
           <button 
             className="general-discount-button"
-            disabled={editingProductId !== null} // Düzenleme sırasında genel iskontoyu devre dışı bırak
+            disabled={editingProductId !== null || products.length === 0} // Düzenleme sırasında genel iskontoyu devre dışı bırak
+            onClick={() => setShowDiscountModal(true)}
           >
             Genel İskonto
           </button>
@@ -541,6 +618,49 @@ const PricingTab: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* Genel İskonto Modal */}
+      {showDiscountModal && (
+        <div className="discount-modal-overlay">
+          <div className="discount-modal">
+            <div className="discount-modal-header">
+              <h3>GENEL İSKONTO</h3>
+              <button className="close-modal" onClick={() => {
+                setShowDiscountModal(false);
+                setNewTotalPrice('');
+              }}>
+                İPTAL
+              </button>
+            </div>
+            <div className="discount-modal-body">
+              <div className="current-total">
+                <span>Mevcut Genel Toplam:</span>
+                <span className="total-amount">{formatCurrency(summary.grandTotal)} TL</span>
+              </div>
+              <div className="new-total-input">
+                <label>YENİ GENEL TOPLAM</label>
+                <div className="input-with-currency">
+                  <span className="currency-prefix">TL</span>
+                  <input 
+                    type="text" 
+                    value={newTotalPrice}
+                    onChange={handlePriceInput}
+                    placeholder={formatCurrency(summary.grandTotal)}
+                  />
+                </div>
+              </div>
+              <div className="discount-modal-actions">
+                <button className="apply-discount" onClick={applyGeneralDiscount}>
+                  UYGULA
+                </button>
+                <button className="remove-discount" onClick={removeDiscount}>
+                  İNDİRİMİ KALDIR
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
