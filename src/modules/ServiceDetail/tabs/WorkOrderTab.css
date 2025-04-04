@@ -1,0 +1,764 @@
+/* İş Emri Sekmesi Stilleri */
+.work-order-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Kart Stilleri */
+.work-order-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.work-order-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.work-order-card h3 {
+  background-color: #1976d2;
+  color: white;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.work-order-card .card-content {
+  padding: 16px;
+}
+
+.work-order-card:nth-child(3) .card-content {
+  padding: 16px 16px 8px 16px;
+}
+
+.work-order-card:nth-child(3) .assigned-technicians-list {
+  margin-bottom: 8px;
+}
+
+.info-row {
+  margin-bottom: 12px;
+}
+
+.info-row label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.select-field {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.input-group .input-field {
+  flex: 1;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.card-action-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.card-action-button:hover {
+  background-color: #1565c0;
+}
+
+/* Araç Ekleme Modal Stilleri */
+.vehicle-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.vehicle-modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 700px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vehicle-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #1976d2;
+  color: white;
+}
+
+.vehicle-modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.vehicle-modal-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.vehicle-modal-body {
+  padding: 16px;
+}
+
+.vehicle-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.modal-form-row .modal-form-group {
+  flex: 1;
+}
+
+.vehicle-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.modal-add-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modal-add-button:hover {
+  background-color: #3d8b40;
+}
+
+/* Usta Ekleme Modal Stilleri */
+.technician-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.technician-modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.technician-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #1976d2;
+  color: white;
+}
+
+.technician-modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.technician-modal-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.technician-modal-body {
+  padding: 16px;
+}
+
+/* Usta Listesi Stilleri */
+.technician-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.technician-search {
+  margin-bottom: 16px;
+}
+
+.technician-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.technician-list-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.technician-list-item:hover {
+  background-color: #f5f5f5;
+}
+
+.technician-list-item.selected {
+  background-color: #e3f2fd;
+}
+
+.technician-avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+}
+
+.technician-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.technician-list-info {
+  flex: 1;
+}
+
+.technician-list-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.technician-list-type {
+  font-size: 12px;
+  color: #666;
+}
+
+.technician-list-action {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.technician-list-action:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.edit-icon {
+  font-size: 18px;
+}
+
+.technician-selected-icon {
+  color: #4caf50;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Usta Modal Eylemleri */
+.technician-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.new-technician-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 130px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.new-technician-button:hover {
+  background-color: #1565c0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modal-done-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 100px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-done-button:hover {
+  background-color: #3d8b40;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.modal-done-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Yeni Usta Ekleme Formu */
+.new-technician-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.technician-avatar-upload {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.technician-avatar-input {
+  display: none;
+}
+
+.technician-avatar-label {
+  cursor: pointer;
+  display: block;
+}
+
+.avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ddd;
+}
+
+.avatar-placeholder-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.avatar-placeholder-text {
+  font-size: 12px;
+  color: #666;
+}
+
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.new-technician-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Atanmış Usta Kartı Stilleri */
+.assigned-technicians-list {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.technician-card {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 6px 8px;
+  position: relative;
+}
+
+.technician-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.technician-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.technician-info {
+  flex: 1;
+}
+
+.technician-name {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.technician-type {
+  font-size: 11px;
+  color: #666;
+}
+
+.technician-delete-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #f44336;
+  padding: 4px;
+}
+
+.no-technicians {
+  text-align: center;
+  padding: 16px;
+  color: #666;
+  font-style: italic;
+}
+
+.vehicle-action {
+  margin-bottom: 16px;
+}
+
+.vehicle-action-button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Notlar Bölümü */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.note-box {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.note-box h3 {
+  background-color: #1976d2;
+  color: white;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.note-content-box {
+  padding: 16px;
+}
+
+.note-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.save-changes {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.save-button:hover {
+  background-color: #3d8b40;
+}
+
+/* Servis Aksiyon Butonları */
+.service-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.close-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.close-btn:hover {
+  background-color: #1976d2;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.qr-btn {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.qr-btn:hover {
+  background-color: #7b1fa2;
+}
+
+.form-btn {
+  background-color: #ff9800;
+  color: white;
+}
+
+.form-btn:hover {
+  background-color: #f57c00;
+}
+
+.reminder-btn {
+  background-color: #009688;
+  color: white;
+}
+
+.reminder-btn:hover {
+  background-color: #00796b;
+}
+
+.sms-btn {
+  background-color: #795548;
+  color: white;
+}
+
+.sms-btn:hover {
+  background-color: #5d4037;
+}
+
+/* Mobil Responsive Düzenlemeler */
+@media (max-width: 1200px) {
+  .work-order-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .notes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-order-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Detaylı Bilgi Göster Butonu */
+.detailed-info-toggle {
+  margin: 10px 0;
+}
+
+.detailed-info-button {
+  background-color: #f2f2f2;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.detailed-info-button:hover {
+  background-color: #e0e0e0;
+}
+
+.detailed-info-section {
+  margin-top: 16px;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+.modal-section-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1976d2;
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+} 

@@ -1,0 +1,115 @@
+.calendar-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.calendar-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #444;
+}
+
+.month-navigation {
+  display: flex;
+  align-items: center;
+}
+
+.month-nav-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.month-nav-button:hover {
+  color: #3498db;
+}
+
+.current-month {
+  margin: 0 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.calendar-body {
+  padding: 15px;
+}
+
+.calendar-days {
+  width: 100%;
+}
+
+.week-days {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.week-day {
+  width: 40px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  color: #777;
+}
+
+.month-days {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.day-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.day-cell:hover {
+  background-color: #f5f5f5;
+}
+
+.day-cell.active {
+  background-color: #3498db;
+  color: white;
+}
+
+.not-ekle-button {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.not-ekle-button button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.not-ekle-button button:hover {
+  background-color: #45a049;
+} 

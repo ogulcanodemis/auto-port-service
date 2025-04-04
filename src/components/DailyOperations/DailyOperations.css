@@ -1,0 +1,96 @@
+.operations-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.operations-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.operations-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #444;
+}
+
+.gider-ekle-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.gider-ekle-button:hover {
+  background-color: #2980b9;
+}
+
+.operations-table {
+  width: 100%;
+}
+
+.operations-table-header {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  padding: 12px 15px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
+}
+
+.column-title {
+  flex: 1;
+}
+
+.column-type {
+  flex: 1;
+}
+
+.column-note {
+  flex: 2;
+}
+
+.column-actions {
+  flex: 0.5;
+  text-align: center;
+}
+
+.operations-table-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.operation-row {
+  display: flex;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.operation-row:hover {
+  background-color: #f5f8ff;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #3498db;
+  transition: color 0.2s;
+}
+
+.action-button:hover {
+  color: #2980b9;
+} 
