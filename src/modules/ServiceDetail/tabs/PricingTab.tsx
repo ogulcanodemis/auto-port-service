@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { QuotationForm, TevkifatliInvoiceForm, InvoiceForm } from '../../../modules/Forms';
 import './PricingTab.css';
 
 interface Product {
@@ -60,6 +61,20 @@ const PricingTab: React.FC = () => {
   const [showDiscountModal, setShowDiscountModal] = useState(false);
   const [newTotalPrice, setNewTotalPrice] = useState<string>('');
   
+  // Bilanço Göster State
+  const [showBalance, setShowBalance] = useState(false);
+  
+  // Teklif Formu State
+  const [showQuotationForm, setShowQuotationForm] = useState(false);
+  const [showTevkifatliInvoiceForm, setShowTevkifatliInvoiceForm] = useState(false);
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  
+  // Tevkifatlı ürünler için varsayılan tevkifat oranını ekle
+  const tevkifatliProducts = products.map(product => ({
+    ...product,
+    tevkifatRate: 0.9 // 9/10 oranı için 0.9
+  }));
+  
   // KDV tutarını hesapla
   const calculateTax = (price: number, taxRate: number): number => {
     return price * (taxRate / 100);
@@ -99,7 +114,63 @@ const PricingTab: React.FC = () => {
     return { subTotal, totalTax, totalDiscount, grandTotal };
   };
   
+  // Hesaplanan bilanço değerleri
+  const calculateBalance = () => {
+    // KDV'li değerler
+    const withVatSales = products.reduce((total, product) => total + product.totalPrice, 0);
+    const withVatProductCost = products.reduce((total, product) => total + (product.unitPrice * 0.7 * product.quantity), 0); // Basit bir maliyet hesabı
+    const withVatProductProfit = withVatSales - withVatProductCost;
+    
+    const withVatLaborSales = withVatSales * 0.3; // Demo amaçlı, normalde farklı bir hesaplama yapılır
+    const withVatLaborCost = withVatLaborSales * 0.4;
+    const withVatLaborProfit = withVatLaborSales - withVatLaborCost;
+    
+    const withVatTotalProfit = withVatProductProfit + withVatLaborProfit;
+    
+    // KDV'siz değerler
+    const noVatSales = products.reduce((total, product) => {
+      const basePrice = product.unitPrice * product.quantity;
+      const discountAmount = calculateDiscount(basePrice, product.discountRate);
+      return total + (basePrice - discountAmount);
+    }, 0);
+    
+    const noVatProductCost = noVatSales * 0.7;
+    const noVatProductProfit = noVatSales - noVatProductCost;
+    
+    const noVatLaborSales = noVatSales * 0.3;
+    const noVatLaborCost = noVatLaborSales * 0.4;
+    const noVatLaborProfit = noVatLaborSales - noVatLaborCost;
+    
+    const noVatTotalProfit = noVatProductProfit + noVatLaborProfit;
+    
+    // Diğer değerler
+    const premiumExpense = 0; // Örnek veri
+    const additionalExpense = 0; // Örnek veri
+    
+    return {
+      withVat: {
+        productSales: withVatSales,
+        productProfit: withVatProductProfit,
+        laborSales: withVatLaborSales,
+        laborProfit: withVatLaborProfit,
+        totalProfit: withVatTotalProfit
+      },
+      noVat: {
+        productSales: noVatSales,
+        productProfit: noVatProductProfit,
+        laborSales: noVatLaborSales,
+        laborProfit: noVatLaborProfit,
+        totalProfit: noVatTotalProfit
+      },
+      expenses: {
+        premium: premiumExpense,
+        additional: additionalExpense
+      }
+    };
+  };
+  
   const summary = calculateSummary();
+  const balance = calculateBalance();
   
   // Yeni ürün ekleme
   const handleAddProduct = () => {
@@ -283,6 +354,44 @@ const PricingTab: React.FC = () => {
     }
   };
   
+  // Bilanço gösterme fonksiyonu
+  const toggleBalance = () => {
+    setShowBalance(!showBalance);
+  };
+  
+  // Teklif formunu göster/gizle
+  const toggleQuotationForm = () => {
+    setShowQuotationForm(!showQuotationForm);
+  };
+  
+  const toggleTevkifatliInvoiceForm = () => {
+    // Alert mesajını kaldırıyoruz
+    setShowTevkifatliInvoiceForm(!showTevkifatliInvoiceForm);
+  };
+  
+  // Fatura formunu göster/gizle
+  const toggleInvoiceForm = () => {
+    setShowInvoiceForm(!showInvoiceForm);
+  };
+  
+  // Basit Demo müşteri ve araç bilgileri
+  const demoCustomerInfo = {
+    name: 'Ahmet',
+    surname: 'Yılmaz',
+    phone: '0532 123 45 67',
+    email: 'ahmet.yilmaz@example.com',
+    address: 'Atatürk Mah. Ankara Cad. No:10 Ankara'
+  };
+  
+  const demoVehicleInfo = {
+    brand: 'Toyota',
+    model: 'Corolla',
+    year: '2020',
+    plate: '06 ABC 123',
+    color: 'Beyaz',
+    km: '45000'
+  };
+  
   return (
     <div className="pricing-tab">
       <div className="pricing-header">
@@ -306,9 +415,9 @@ const PricingTab: React.FC = () => {
         <button 
           className="print-form-button"
           disabled={editingProductId !== null || products.length === 0}
-          onClick={() => alert('Form yazdırılıyor...')}
+          onClick={toggleQuotationForm}
         >
-          Form Yazdır
+          Teklif Formu Yazdır
         </button>
         <button 
           className="proforma-button"
@@ -320,7 +429,7 @@ const PricingTab: React.FC = () => {
         <button 
           className="create-invoice-button"
           disabled={editingProductId !== null || products.length === 0}
-          onClick={() => alert('Fatura oluşturuluyor...')}
+          onClick={toggleInvoiceForm}
         >
           Fatura Oluştur
         </button>
@@ -592,32 +701,132 @@ const PricingTab: React.FC = () => {
           </div>
         </div>
         
-        <div className="pricing-actions bottom-actions">
-          <button 
-            className="general-discount-button"
-            disabled={editingProductId !== null || products.length === 0} // Düzenleme sırasında genel iskontoyu devre dışı bırak
-            onClick={() => setShowDiscountModal(true)}
-          >
-            Genel İskonto
-          </button>
-          <div className="checkbox-field">
-            <input 
-              type="checkbox" 
-              id="tevkifatli-fatura" 
-              disabled={editingProductId !== null} // Düzenleme sırasında devre dışı bırak
-            />
-            <label htmlFor="tevkifatli-fatura">Tevkifatlı Fatura</label>
+        <div className="pricing-bottom-actions">
+          <div className="action-buttons-container">
+            <button 
+              className="general-discount-button"
+              onClick={() => setShowDiscountModal(true)}
+              disabled={products.length === 0 || editingProductId !== null}
+            >
+              Genel İskonto
+            </button>
+            
+            <div className="toggle-balance-container">
+              <button 
+                className={`balance-toggle-button ${showBalance ? 'active' : ''}`}
+                onClick={toggleBalance}
+                disabled={editingProductId !== null || products.length === 0}
+              >
+                Bilançoyu Göster
+                <span className="toggle-icon">{showBalance ? '▼' : '▶'}</span>
+              </button>
+            </div>
           </div>
-          <div className="checkbox-field">
-            <input 
-              type="checkbox" 
-              id="bilancoya-goster" 
-              disabled={editingProductId !== null} // Düzenleme sırasında devre dışı bırak
-            />
-            <label htmlFor="bilancoya-goster">Bilançoyu Göster</label>
+          
+          <div className="tevkifat-button-container">
+            <button
+              className="tevkifat-button"
+              onClick={toggleTevkifatliInvoiceForm}
+              disabled={editingProductId !== null || products.length === 0}
+              title="Tevkifatlı fatura, KDV'nin bir kısmının alıcı tarafından ödenmesini sağlayan özel bir fatura türüdür."
+            >
+              Tevkifatlı Fatura <span className="tevkifat-info">ⓘ</span>
+            </button>
           </div>
         </div>
       </div>
+      
+      {/* Bilanço Özeti */}
+      {showBalance && (
+        <div className="balance-panel">
+          <div className="balance-container">
+            <div className="balance-row with-border">
+              <span className="balance-label">Ara Toplam</span>
+              <span className="balance-value">{formatCurrency(summary.subTotal)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">Genel İskonto</span>
+              <span className="balance-value">{formatCurrency(summary.totalDiscount)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">Ara Toplam</span>
+              <span className="balance-value">{formatCurrency(summary.subTotal - summary.totalDiscount)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDV</span>
+              <span className="balance-value">{formatCurrency(summary.totalTax)} TL</span>
+            </div>
+            <div className="balance-row with-border">
+              <span className="balance-label">Genel Toplam</span>
+              <span className="balance-value">{formatCurrency(summary.grandTotal)} TL</span>
+            </div>
+            
+            <div className="balance-toggle-btn">
+              <span className="toggle-icon">▼</span>
+              <span>BİLANÇOYU GİZLE</span>
+            </div>
+            
+            <div className="balance-row">
+              <span className="balance-label">KDV'li Ürün Satış</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.productSales)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDV'li Ürün Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.productProfit)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDV'li İşçilik Satış</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.laborSales)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDV'li İşçilik Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.laborProfit)} TL</span>
+            </div>
+            <div className="balance-row with-border">
+              <span className="balance-label">KDV'li Toplam Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.totalProfit)} TL</span>
+            </div>
+            
+            <div className="balance-row">
+              <span className="balance-label">KDVsiz Ürün Satış</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.productSales)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDVsiz Ürün Kârı</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.productProfit)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDVsiz İşçilik Satış</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.laborSales)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDVsiz İşçilik Kârı</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.laborProfit)} TL</span>
+            </div>
+            <div className="balance-row with-border">
+              <span className="balance-label">KDVsiz Toplam Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.totalProfit)} TL</span>
+            </div>
+            
+            <div className="balance-row">
+              <span className="balance-label">Prim Gideri</span>
+              <span className="balance-value">{formatCurrency(balance.expenses.premium)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">Ek Ücret Gideri</span>
+              <span className="balance-value">{formatCurrency(balance.expenses.additional)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDV'li Total Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.withVat.totalProfit - balance.expenses.premium - balance.expenses.additional)} TL</span>
+            </div>
+            <div className="balance-row">
+              <span className="balance-label">KDVsiz Total Kâr</span>
+              <span className="balance-value">{formatCurrency(balance.noVat.totalProfit - balance.expenses.premium - balance.expenses.additional)} TL</span>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Genel İskonto Modal */}
       {showDiscountModal && (
@@ -661,8 +870,38 @@ const PricingTab: React.FC = () => {
           </div>
         </div>
       )}
+      
+      {/* Teklif Formu */}
+      {showQuotationForm && (
+        <QuotationForm 
+          customerInfo={demoCustomerInfo}
+          vehicleInfo={demoVehicleInfo}
+          products={products}
+          onClose={toggleQuotationForm}
+        />
+      )}
+      
+      {/* Tevkifatlı Fatura Formu */}
+      {showTevkifatliInvoiceForm && (
+        <TevkifatliInvoiceForm
+          customerInfo={demoCustomerInfo}
+          vehicleInfo={demoVehicleInfo}
+          products={tevkifatliProducts}
+          onClose={toggleTevkifatliInvoiceForm}
+        />
+      )}
+
+      {/* Standart Fatura Formu */}
+      {showInvoiceForm && (
+        <InvoiceForm
+          customerInfo={demoCustomerInfo}
+          vehicleInfo={demoVehicleInfo}
+          products={products}
+          onClose={toggleInvoiceForm}
+        />
+      )}
     </div>
   );
 };
 
-export default PricingTab; 
+export default PricingTab;

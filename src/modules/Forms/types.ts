@@ -59,7 +59,72 @@ export interface FormSettings {
   showServicePhotos: boolean;
 }
 
-export type FormType = 'carAcceptance' | 'deliveryNote' | 'serviceInvoice';
+export interface QuotationProduct {
+  id: number;
+  code: string;
+  name: string;
+  unitPrice: number;
+  quantity: number;
+  taxRate: number;
+  discountRate: number;
+  totalPrice: number;
+}
+
+export interface QuotationFormData {
+  customerInfo: CustomerInfo;
+  vehicleInfo: VehicleInfo;
+  products: QuotationProduct[];
+  quotationNumber: string;
+  quotationDate: string;
+  validUntil: string;
+  paymentMethod: string;
+  notes: string;
+  createdBy: string;
+  generalDiscountRate?: number;
+  settings: FormSettings;
+}
+
+export interface TevkifatliInvoiceProduct extends QuotationProduct {
+  tevkifatRate: number; // Tevkifat oranı (örn: 9/10 için 0.9)
+}
+
+export interface TevkifatliInvoiceFormData {
+  customerInfo: CustomerInfo;
+  vehicleInfo: VehicleInfo;
+  products: TevkifatliInvoiceProduct[];
+  invoiceNumber: string;
+  invoiceDate: string;
+  paymentMethod: string;
+  paymentDueDate: string;
+  notes: string;
+  taxOffice: string; // Vergi dairesi
+  taxNumber: string; // Vergi numarası
+  createdBy: string;
+  generalDiscountRate?: number;
+  settings: FormSettings;
+}
+
+export interface InvoiceProduct extends QuotationProduct {
+  // Standart fatura için ek alanlar gerekirse buraya eklenebilir
+}
+
+export interface InvoiceFormData {
+  customerInfo: CustomerInfo;
+  vehicleInfo: VehicleInfo;
+  products: InvoiceProduct[];
+  invoiceNumber: string;
+  invoiceDate: string;
+  paymentMethod: string;
+  paymentDueDate: string;
+  notes: string;
+  taxOffice: string; // Vergi dairesi
+  taxNumber: string; // Vergi numarası
+  createdBy: string;
+  generalDiscountRate?: number;
+  settings: FormSettings;
+}
+
+export type FormType = 'carAcceptance' | 'deliveryNote' | 'serviceInvoice' | 'quotation' | 'tevkifatliInvoice' | 'invoice';
 
 export interface FormData {
   formType: FormType;
